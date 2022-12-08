@@ -1,4 +1,4 @@
-const fakeDb = require("./fakeDb.js");
+const { fakeDb, changeItemName } = require("./fakeDb.js");
 const ShoppingListItem = require("./ShoppingListItem.js");
 
-module.exports = { fakeDb, ShoppingListItem };
+module.exports = { fakeDb, changeItemName, ShoppingListItem };

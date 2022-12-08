@@ -1,4 +1,4 @@
-const { fakeDb, ShoppingListItem } = require("../db");
+const { fakeDb, changeItemName, ShoppingListItem } = require("../db");
 const { ItemAlreadyExistsError, ItemNotFoundError } = require("../errors");
 
 const getItemList = () => {
@@ -31,12 +31,7 @@ const setItemDetails = (itemName, updatedName, updatedPrice) => {
   } else if (updatedName !== itemName && fakeDb.has(updatedName)) {
     throw new ItemAlreadyExistsError(itemName);
   } else {
-    const itemToUpdate = fakeDb.get(itemName);
-    if (updatedName !== undefined && updatedName !== itemName) {
-      fakeDb.delete(itemName);
-      itemToUpdate.name = updatedName;
-      fakeDb.set(updatedName, itemToUpdate);
-    }
+    const itemToUpdate = changeItemName(itemName, updatedName);
     if (updatedPrice !== undefined && itemToUpdate.price !== updatedPrice) {
       itemToUpdate.price = updatedPrice;
     }
