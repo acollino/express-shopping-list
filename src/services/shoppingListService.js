@@ -1,4 +1,5 @@
-const { fakeDb, shoppingListItem } = require("../db");
+const { fakeDb, ShoppingListItem } = require("../db");
+const { ItemAlreadyExistsError, ItemNotFoundError } = require("../errors");
 
 const getItemList = () => {
   const listItems = Array.from(fakeDb.values());
@@ -7,9 +8,9 @@ const getItemList = () => {
 
 const addItem = (name, price) => {
   if (fakeDb.has(name)) {
-    throw new Error(`${name} is already on the shopping list.`);
+    throw new ItemAlreadyExistsError(name);
   } else {
-    const addedItem = new shoppingListItem(name, price);
+    const addedItem = new ShoppingListItem(name, price);
     fakeDb.set(name, addedItem);
     return addedItem.getDetailsWithCurrency();
   }
@@ -17,7 +18,7 @@ const addItem = (name, price) => {
 
 const getItemDetails = (name) => {
   if (!fakeDb.has(name)) {
-    throw new Error(`${name} is not on the shopping list.`);
+    throw new ItemNotFoundError(name);
   } else {
     const requestedItem = fakeDb.get(name);
     return requestedItem.getDetailsWithCurrency();
@@ -26,9 +27,9 @@ const getItemDetails = (name) => {
 
 const setItemDetails = (itemName, updatedName, updatedPrice) => {
   if (!fakeDb.has(itemName)) {
-    throw new Error(`${itemName} is not on the shopping list.`);
+    throw new ItemNotFoundError(itemName);
   } else if (updatedName !== itemName && fakeDb.has(updatedName)) {
-    throw new Error(`${updatedName} is already on the shopping list.`);
+    throw new ItemAlreadyExistsError(itemName);
   } else {
     const itemToUpdate = fakeDb.get(itemName);
     if (updatedName !== undefined && updatedName !== itemName) {
