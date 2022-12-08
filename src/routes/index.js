@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { shoppingListController } = require("../controllers");
 
-router.param("name", shoppingListController.getItem);
+// Could use router.param("name", getItemFunction) before the other routes
 
 router
   .route("/items")

@@ -1,7 +1,7 @@
 class ShoppingListItem {
-  constructor(name, item) {
+  constructor(name, price) {
     this.name = name;
-    this.item = item;
+    this.price = price;
   }
 }
 
