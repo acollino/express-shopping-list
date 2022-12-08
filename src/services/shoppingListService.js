@@ -11,40 +11,29 @@ const getItemList = () => {
 };
 
 const addItem = (itemName, price) => {
-  if (fakeDb.has(itemName)) {
-    throw new ItemAlreadyExistsError(itemName);
-  } else if (isNaN(price)) {
-    throw new InvalidPriceError(price);
-  } else {
-    const addedItem = new ShoppingListItem(itemName, price);
-    fakeDb.set(itemName, addedItem);
-    return addedItem.getDetailsWithCurrency();
-  }
+  if (fakeDb.has(itemName)) throw new ItemAlreadyExistsError(itemName);
+  if (isNaN(price)) throw new InvalidPriceError(price);
+  const addedItem = new ShoppingListItem(itemName, price);
+  fakeDb.set(itemName, addedItem);
+  return addedItem.getDetailsWithCurrency();
 };
 
 const getItemDetails = (itemName) => {
-  if (!fakeDb.has(itemName)) {
-    throw new ItemNotFoundError(itemName);
-  } else {
-    const requestedItem = fakeDb.get(itemName);
-    return requestedItem.getDetailsWithCurrency();
-  }
+  if (!fakeDb.has(itemName)) throw new ItemNotFoundError(itemName);
+  const requestedItem = fakeDb.get(itemName);
+  return requestedItem.getDetailsWithCurrency();
 };
 
 const setItemDetails = (itemName, updatedName, updatedPrice) => {
-  if (!fakeDb.has(itemName)) {
-    throw new ItemNotFoundError(itemName);
-  } else if (updatedName !== itemName && fakeDb.has(updatedName)) {
+  if (!fakeDb.has(itemName)) throw new ItemNotFoundError(itemName);
+  if (updatedName !== itemName && fakeDb.has(updatedName))
     throw new ItemAlreadyExistsError(itemName);
-  } else if (isNaN(updatedPrice)) {
-    throw new InvalidPriceError(updatedPrice);
-  } else {
-    const itemToUpdate = changeItemName(itemName, updatedName);
-    if (updatedPrice !== undefined && itemToUpdate.price !== updatedPrice) {
-      itemToUpdate.price = updatedPrice;
-    }
-    return itemToUpdate.getDetailsWithCurrency();
+  if (isNaN(updatedPrice)) throw new InvalidPriceError(updatedPrice);
+  const itemToUpdate = changeItemName(itemName, updatedName);
+  if (updatedPrice !== undefined && itemToUpdate.price !== updatedPrice) {
+    itemToUpdate.price = updatedPrice;
   }
+  return itemToUpdate.getDetailsWithCurrency();
 };
 
 const deleteItem = (itemName) => {
