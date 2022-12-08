@@ -4,6 +4,6 @@
  * more complex projects.
  */
 
-const shoppingListController = require("./shopping_list_controller");
+const shoppingListController = require("./shoppingListController");
 
 module.exports = { shoppingListController };
