@@ -3,6 +3,9 @@ const routes = require("./src/routes");
 
 const app = express();
 
+// To parse JSON included in request
+app.use(express.json());
+
 // Prepends /api to our routes
 app.use("/api", routes);
 
