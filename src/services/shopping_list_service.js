@@ -1,7 +1,8 @@
 const { fakeDb, shoppingListItem } = require("../db");
 
 const getItemList = () => {
-  return Array.from(fakeDb.values());
+  const listItems = Array.from(fakeDb.values());
+  return listItems.map((item) => item.getDetailsWithCurrency());
 };
 
 const addItem = (name, price) => {
@@ -10,7 +11,7 @@ const addItem = (name, price) => {
   } else {
     const addedItem = new shoppingListItem(name, price);
     fakeDb.set(name, addedItem);
-    return addedItem;
+    return addedItem.getDetailsWithCurrency();
   }
 };
 
@@ -19,7 +20,7 @@ const getItemDetails = (name) => {
     throw new Error(`${name} is not on the shopping list.`);
   } else {
     const requestedItem = fakeDb.get(name);
-    return requestedItem;
+    return requestedItem.getDetailsWithCurrency();
   }
 };
 
@@ -38,7 +39,7 @@ const setItemDetails = (itemName, updatedName, updatedPrice) => {
     if (updatedPrice !== undefined && itemToUpdate.price !== updatedPrice) {
       itemToUpdate.price = updatedPrice;
     }
-    return itemToUpdate;
+    return itemToUpdate.getDetailsWithCurrency();
   }
 };
 
