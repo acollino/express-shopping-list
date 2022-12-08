@@ -6,21 +6,21 @@ const getItemList = () => {
   return listItems.map((item) => item.getDetailsWithCurrency());
 };
 
-const addItem = (name, price) => {
-  if (fakeDb.has(name)) {
-    throw new ItemAlreadyExistsError(name);
+const addItem = (itemName, price) => {
+  if (fakeDb.has(itemName)) {
+    throw new ItemAlreadyExistsError(itemName);
   } else {
-    const addedItem = new ShoppingListItem(name, price);
-    fakeDb.set(name, addedItem);
+    const addedItem = new ShoppingListItem(itemName, price);
+    fakeDb.set(itemName, addedItem);
     return addedItem.getDetailsWithCurrency();
   }
 };
 
-const getItemDetails = (name) => {
-  if (!fakeDb.has(name)) {
-    throw new ItemNotFoundError(name);
+const getItemDetails = (itemName) => {
+  if (!fakeDb.has(itemName)) {
+    throw new ItemNotFoundError(itemName);
   } else {
-    const requestedItem = fakeDb.get(name);
+    const requestedItem = fakeDb.get(itemName);
     return requestedItem.getDetailsWithCurrency();
   }
 };
@@ -44,12 +44,14 @@ const setItemDetails = (itemName, updatedName, updatedPrice) => {
   }
 };
 
-const deleteItem = (name) => {
-  const deletionSuccessful = fakeDb.delete(name);
+const deleteItem = (itemName) => {
+  const deletionSuccessful = fakeDb.delete(itemName);
   if (deletionSuccessful) {
-    return { message: `${name} deleted from the shopping list.` };
+    return { message: `${itemName} deleted from the shopping list.` };
   } else {
-    return { message: `Not deleted; ${name} was not on the shopping list.` };
+    return {
+      message: `Not deleted; ${itemName} was not on the shopping list.`,
+    };
   }
 };
 
