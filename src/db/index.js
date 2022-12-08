@@ -1,4 +1,4 @@
 const fakeDb = require("./fakeDb.js");
-const shoppingListItem = require("./ShoppingListItem.js");
+const ShoppingListItem = require("./ShoppingListItem.js");
 
-module.exports = { fakeDb, shoppingListItem };
+module.exports = { fakeDb, ShoppingListItem };
