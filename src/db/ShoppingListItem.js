@@ -3,11 +3,11 @@ const CURRENCY_SYMBOL = "$";
 class ShoppingListItem {
   constructor(name, price) {
     this.name = name;
-    this.price = Number(price);
+    this.price = price;
   }
 
   getPrice() {
-    return `${CURRENCY_SYMBOL}${this.price.toFixed(2)}`;
+    return `${CURRENCY_SYMBOL}${Number(this.price).toFixed(2)}`;
   }
 
   getDetailsWithCurrency() {
